@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    Produto{{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="media col-md-9">
+                <h2>{{ product.nome }}</h2>
+                <div class="pull-left thumbnail">
+                    <img class="media-object" width="250px" src="{{ asset(product.imagemPath) }}" alt="{{ product.nome }}">
+                </div>
+                <div class="media-body">
+                    {{ product.descricao }}
+                </div>
+                <h2>R$ {{ product.preco }}</h2>
+                <a href="{{ path('_add', {id: product.id}) }}" class="btn btn-success btn-lg">Colocar no Carrinho</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

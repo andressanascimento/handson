@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %} - Loja{% endblock %}</title>
+        {# Adicionando css #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <div class="container-fluid">
+        {% block navbar %}
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">Loja</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('homepage') }}">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 30px">
+                        <li>
+                            <a href="{{ path('_carrinho') }}"> <i class="glyphicon glyphicon-shopping-cart"></i> 
+                                Carrinho
+
+                                {% if app.session.get('cart') %}
+
+                                    ({{ app.session.get('cart').quantity }})
+
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                    <form action="{{ path('_search') }}" class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" name="find" value="{% if find is defined %}{{ find }}{% endif %}" placeholder="Pesquisa"
+
+                                   class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                    </form>
+
+                </div>
+            </nav>
+        {% endblock%}
+        <body style="margin-top: 70px">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning alert-dismissable">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% block body %}
+
+            {% endblock %}
+            {# Adicionando javascripts #}
+            {% block javascripts %}
+                <script src="{{ asset('assets/vendor/jquery/dist/js/jquery.min.js') }}"></script>
+                <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            {% endblock %}
+        </body>
+    </div>
+</html>

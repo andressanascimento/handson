@@ -1,0 +1,12 @@
+carrinho:
+    resource: "@CarrinhoBundle/Controller/"
+    type:     annotation
+    prefix:   /carrinho
+
+produto:
+    resource: "@ProdutoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

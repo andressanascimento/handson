@@ -1,0 +1,3 @@
+carrinho_homepage:
+    path:     /
+    defaults: { _controller: CarrinhoBundle:Default:index }
