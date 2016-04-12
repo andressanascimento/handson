@@ -1,0 +1,4 @@
+services:
+#    checkout.example:
+#        class: CheckoutBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
