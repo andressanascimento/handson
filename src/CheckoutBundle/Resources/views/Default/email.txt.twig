@@ -1,0 +1,37 @@
+Agradecemos a preferencia.
+
+Seu pedido foi realizado com sucesso e já esta sendo preparado para entrega.
+
+Dados do seu pedido:
+
+--------------------------------------------
+
+Nome: {{ user.nome }}
+
+E-mail: {{ user.email }}
+
+Rua: {{ user.endereco.rua }}
+
+Numero: {{ user.endereco.numero }}
+
+CEP: {{ user.endereco.postalCode }}
+
+Cidade: {{ user.endereco.cidade }}
+
+Estado: {{ user.endereco.estado }}
+
+{% for cartItem in cart %}
+
+    --------------------------------------------
+
+    Produto: {{ cartItem.produto.nome }}
+
+    Quantidade: {{ cartItem.quantidade }}
+
+    Sub-total: {{ cartItem.produto.preco * cartItem.quantidade }}
+
+{% endfor %}
+
+--------------------------------------------
+
+TOTAL: {{ cart.total }}

@@ -1,12 +1,12 @@
 security:
    encoders:
-       Symfony\Component\Security\Core\User\User: plaintext
+       UsuarioBundle\Entity\Usuario:
+            algorithm: bcrypt
+            cost: 12
 
    providers:
-       in_memory:
-           memory:
-               users:
-                   fulano:  { password: 123, roles: [ 'ROLE_USER' ] }
+       customers:
+            entity: { class: UsuarioBundle:Usuario, property: email }
 
    firewalls:
        dev:

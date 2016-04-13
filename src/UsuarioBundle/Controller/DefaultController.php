@@ -4,6 +4,7 @@ namespace UsuarioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use UsuarioBundle\Entity\Usuario;
@@ -66,9 +67,15 @@ class DefaultController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $encoder = $this->container->get('security.password_encoder');
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $user = $this->getDoctrine()->getRepository('UsuarioBundle:Usuario')->insert($user);
+
+            // automatic login user
+            $providerKey = 'secured_area'; // Name of firewall
+            $token = new UsernamePasswordToken($user, null, $providerKey, array('AUTO_LOGIN'));
+            $this->container->get('security.token_storage')->setToken($token);
             return $this->redirect($this->generateUrl('checkout'));
         }
 

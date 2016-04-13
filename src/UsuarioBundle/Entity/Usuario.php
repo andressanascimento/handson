@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use UsuarioBundle\Entity\Endereco;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * Usuario
@@ -14,7 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="UsuarioBundle\Repository\UsuarioRepository")
  * @UniqueEntity("email")
  */
-class Usuario {
+class Usuario implements UserInterface, \Serializable
+{
 
     /**
      * @var int
@@ -64,6 +67,8 @@ class Usuario {
 
      */
     protected $endereco;
+    
+    private $salt;
 
     /**
      * Get id
@@ -148,5 +153,50 @@ class Usuario {
         $this->endereco = $endereco;
     }
 
+    public function getUsername()
+   {
+       return $this->getEmail();
+   }
+
+   /**
+    * @inheritDoc
+    */
+   public function getSalt()
+   {
+       return $this->salt;
+   }
+
+   /**
+    * @inheritDoc
+    */
+   public function getRoles()
+   {
+       return array('ROLE_USER');
+   }
+
+   /**
+    * @inheritDoc
+    */
+   public function eraseCredentials() {}
+
+   /**
+    * @see \Serializable::serialize()
+    */
+   public function serialize()
+   {
+       return serialize(array(
+           $this->id,
+       ));
+   }
+
+   /**
+    * @see \Serializable::unserialize()
+    */
+   public function unserialize($serialized)
+   {
+       list (
+           $this->id,
+       ) = unserialize($serialized);
+   }
 
 }

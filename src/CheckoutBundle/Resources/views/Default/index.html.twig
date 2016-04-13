@@ -13,16 +13,54 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Seus Dados</strong></div>
                     <div class="panel-body">
-                        <p>xxxx</p>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Nome</strong>: {{ app.user.nome }}</li>
+                            <li class="list-group-item"><strong>E-mail</strong>: {{ app.user.email }}</li>
+                            <li class="list-group-item"><strong>Rua</strong>: {{ app.user.endereco.rua }}</li>
+                            <li class="list-group-item"><strong>Numero</strong>: {{ app.user.endereco.numero }}</li>
+                            <li class="list-group-item"><strong>CEP</strong>: {{ app.user.endereco.postalCode }}</li>
+                            <li class="list-group-item"><strong>Cidade</strong>: {{ app.user.endereco.cidade }}</li>
+                            <li class="list-group-item"><strong>Estado</strong>: {{ app.user.endereco.estado }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Sua compra</strong></div>
                     <div class="panel-body">
-                        <p>xxxx</p>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Produto</th>
+                                <th>Nome</th>
+                                <th class="text-center">Quantidade</th>
+                                <th class="text-center">Preço</th>
+                                <th class="text-right">Sub-Total</th>
+                            </tr>
+                            {% for cartItem in app.session.get('cart') %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('_produto', {id: cartItem.produto.id}) }}">
+                                            <img width="250px" src="{{ asset(cartItem.produto.imagemPath) }}" alt="{{ cartItem.produto.nome }}">
+                                        </a>
+                                    </td>
+                                    <td><a href="{{ path('_produto', {id: cartItem.produto.id}) }}">{{ cartItem.produto.nome }}</a></td>
+                                    <td class="text-center">{{ cartItem.quantidade }}</td>
+                                    <td class="text-center">{{ cartItem.produto.preco }}</td>
+                                    <td class="text-right">{{ cartItem.produto.preco * cartItem.quantidade }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th colspan="4" class="text-right">TOTAL:</th>
+                                <th class="text-right">{{ app.session.get('cart').total }}</th>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <a href="{{ path('sucesso') }}" class="btn btn-success btn-lg">Efetuar o pedido</a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

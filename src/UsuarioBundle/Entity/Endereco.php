@@ -71,7 +71,7 @@ class Endereco {
      * @ORM\Column(name="cidade", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *      min = "8",
+     *      min = "5",
      *      max = "20",
      *      minMessage = "Your city must be at least {{ limit }} characters length",
      *      maxMessage = "Your city cannot be longer than {{ limit }} characters length"
