@@ -42,7 +42,7 @@ class DefaultController extends Controller {
         $this->get('mailer')->send($message);
 
         $session->remove('cart');
-        return $this->render('CheckoutBundle:Default:sucesso.txt.twig');
+        return $this->render('CheckoutBundle:Default:sucesso.html.twig');
     }
 
 }
